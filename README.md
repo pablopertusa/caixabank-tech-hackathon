@@ -50,7 +50,6 @@ You will have to work with diverse datasets containing customer and transaction 
         "card_number": "793288564792063",
         ...
       }
-
     }
 }
 ```
@@ -129,7 +128,7 @@ The `/predictions` folder should contain the tasks outputs for Task 1 , 3 and 4.
 
 ## 🎯 Tasks:
 
-The challenge will be divided in three subparts: Data Statistics, Data Prediction and IA Agent creation. For each part you have a set of tasks. You have examples of the expected submission for tasks 1 ,3 and 4 in the `/predictions` folder.
+The challenge will be divided in three subparts: Data Statistics, Data Prediction and IA Agent creation. For each part you have a set of tasks. You have examples of the expected submission for tasks 1, 3 and 4 in the `/predictions` folder.
 
 - **Part 1:**
   - **Task 1:** Submit the answers to the following queries: 
@@ -196,7 +195,7 @@ A1: The clients you need information from are the ones found in the transactions
 A2: The sum of the negative transaction's amounts for each client and month across all their credit cards.
 
 ### Q3: How do I run the sample tests?
-A3: In the command line, write the command `python -m pytest tests/statistics_test.py` for Task 2 tests and `python -m pytest tests/agent_test.py` for Task 5. Ensure the `transactions_data.csv` file is located in the `/data/raw/`∫ directory.
+A3: In the command line, write the command `python -m pytest tests/statistics_test.py` for Task 2 tests and `python -m pytest tests/agent_test.py` for Task 5. Ensure the `transactions_data.csv` file is located in the `/data/raw/` directory.
 
 
 ### Q4: How do I submit my solution? 
