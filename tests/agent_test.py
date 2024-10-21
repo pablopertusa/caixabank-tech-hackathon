@@ -15,8 +15,8 @@ sample_data = pd.read_csv(
 def delete_reports():
     if os.path.exists(report_folder):
         shutil.rmtree(report_folder)
-    os.makedir("reports")
-    os.makedir("reports/figures")
+    os.mkdir("reports")
+    os.mkdir("reports/figures")
 
 
 def check_all_values(expected_dict, submitted_dict):
