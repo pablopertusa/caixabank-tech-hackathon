@@ -171,7 +171,7 @@ The evaluation of Task 1 , Task 3 and Task 4 will be done via comparison of the 
 - The predictions for Task 3 will be evaluated using the F1 Score with 'macro' average.
 - The predictions for Task 4 will be evaluated using the R2 Score.
 
-The evaluation for Task 2 and Task 5 will be done via pytest. Your functions should have the expected input and outputs. You have available some sample tests in the `/test` folder. Take into account that these are just example tests, the evaluation will be done with a larger sample of tests.
+The evaluation for Task 2 and Task 5 will be done via Pytest. Your functions should have the expected input and outputs. You have available some sample tests in the `/test` folder. Take into account that these are just example tests, the evaluation will be done with a larger sample of tests.
 The grading system will be the following:
 - Task 1: 200 / 1000 points
 - Task 2: 200 / 1000 points
