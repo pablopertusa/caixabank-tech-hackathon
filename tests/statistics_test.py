@@ -1,4 +1,8 @@
-from data import data_functions
+from data.data_functions import (
+    earnings_and_expenses,
+    expenses_summary,
+    cash_flow_summary,
+)
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -13,7 +17,7 @@ image_folder = "reports/figures"
 def test_earnings_and_expenses_1():
     df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
     try:
-        answer = data_functions.earnings_and_expenses(df, user_id, start_date, end_date)
+        answer = earnings_and_expenses(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
             print("Returned object is not a dataframe.")
             answer = pd.DataFrame()
@@ -36,7 +40,7 @@ def test_earnings_and_expenses_2():
     os.mkdir(image_folder)
     df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
     try:
-        answer = data_functions.earnings_and_expenses(df, user_id, start_date, end_date)
+        answer = earnings_and_expenses(df, user_id, start_date, end_date)
     except:
         answer = pd.DataFrame()
     condition = Path(f"{image_folder}/earnings_and_expenses.png").is_file()
@@ -47,7 +51,7 @@ def test_earnings_and_expenses_2():
 def test_expenses_summary_1():
     df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
     try:
-        answer = data_functions.expenses_summary(df, user_id, start_date, end_date)
+        answer = expenses_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
             print("Returned_object if not a DataFrame.")
             answer = pd.DataFrame()
@@ -133,7 +137,7 @@ def test_expenses_summary_2():
     os.mkdir(image_folder)
     df, user_id, start_date, end_date = sample_data, 32, "2011-05-01", "2016-11-30"
     try:
-        answer = data_functions.expenses_summary(df, user_id, start_date, end_date)
+        answer = expenses_summary(df, user_id, start_date, end_date)
     except:
         answer = pd.DataFrame()
     condition = Path(f"{image_folder}/expenses_summary.png").is_file()
@@ -144,7 +148,7 @@ def test_expenses_summary_2():
 def test_cash_flow_summary_1():
     df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2013-02-28"
     try:
-        answer = data_functions.earnings_and_expenses(df, user_id, start_date, end_date)
+        answer = cash_flow_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
             print("Returned object is not a DataFrame")
             answer = pd.DataFrame()
@@ -211,7 +215,7 @@ def test_cash_flow_summary_1():
 def test_cash_flow_summary_2():
     df, user_id, start_date, end_date = sample_data, 50, "2011-01-01", "2011-04-30"
     try:
-        answer = data_functions.cash_flow_summary(df, user_id, start_date, end_date)
+        answer = cash_flow_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
             print("Returned object is not a DataFrame.")
             answer = pd.DataFrame()
