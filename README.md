@@ -168,8 +168,8 @@ Submissions will be tested via **unit** tests. You need to ensure that your func
 ## 📊 Evaluation
 
 The evaluation of Task 1 , Task 3 and Task 4 will be done via comparison of the results in the json file. You can find the expected format in the `/predictions` folder.
-- The predictions for Task 3 will be evaluated using the F1 Score with 'macro' average.
-- The predictions for Task 4 will be evaluated using the R2 Score.
+- The predictions for Task 3 will be evaluated using the [Balanced Accuracy score](https://scikit-learn.org/1.5/modules/generated/sklearn.metrics.balanced_accuracy_score.html) .
+- The predictions for Task 4 will be evaluated using the [R2 Score](https://scikit-learn.org/1.5/modules/generated/sklearn.metrics.r2_score.html).
 
 The evaluation for Task 2 and Task 5 will be done via Pytest. Your functions should have the expected input and outputs. You have available some sample tests in the `/test` folder. Take into account that these are just example tests, the evaluation will be done with a larger sample of tests.
 The grading system will be the following:
