@@ -1,4 +1,12 @@
-#  📈 AI Agent - Report Maker 📊
+#  📈 The Game is HackathON - AI Agent Report Maker 📊
+
+Category   ➡️   Data Science
+
+Subcategory   ➡️   Data Scientist
+
+Difficulty   ➡️   Hard
+
+---
 
 ## 🌐 Background
 
