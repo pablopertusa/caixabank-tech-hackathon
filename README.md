@@ -122,9 +122,9 @@ The repository structure is provided and must be adhered to strictly:
 │       └── tools.py            
 │
 ├── tests/                      
-│   ├── test_api_calls.py       
-│   ├── test_data_processing.py 
-│   └── test_models.py                    
+│   ├── agent_test.py       
+│   ├── statistics_test.py 
+│   └── conftest.py                    
 │
 ├── README.md  
 └── requirements.txt     
