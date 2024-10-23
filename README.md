@@ -110,8 +110,8 @@ The repository structure is provided and must be adhered to strictly:
 ├── src/                       
 │   ├── data/                   
 │   │   ├── api_calls.py       
-│   │   ├── merge_data.py       
-│   │   └── process_data.py     
+│   │   ├── data_functions.py       
+│   │   └── data_questions.py     
 │   │
 │   ├── models/                 
 │   │   ├── train_model.py      
