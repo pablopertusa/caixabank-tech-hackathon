@@ -15,7 +15,12 @@ image_folder = "reports/figures"
 
 
 def test_earnings_and_expenses_1():
-    df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        126,
+        "2013-01-01",
+        "2020-01-31",
+    )
     try:
         answer = earnings_and_expenses(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
@@ -38,7 +43,12 @@ def test_earnings_and_expenses_2():
     if os.path.exists(image_folder):
         shutil.rmtree(image_folder)
     os.mkdir(image_folder)
-    df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        126,
+        "2013-01-01",
+        "2020-01-31",
+    )
     try:
         answer = earnings_and_expenses(df, user_id, start_date, end_date)
     except:
@@ -49,7 +59,12 @@ def test_earnings_and_expenses_2():
 
 
 def test_expenses_summary_1():
-    df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2020-01-31"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        126,
+        "2013-01-01",
+        "2020-01-31",
+    )
     try:
         answer = expenses_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
@@ -135,7 +150,12 @@ def test_expenses_summary_2():
     if os.path.exists(image_folder):
         shutil.rmtree(image_folder)
     os.mkdir(image_folder)
-    df, user_id, start_date, end_date = sample_data, 32, "2011-05-01", "2016-11-30"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        32,
+        "2011-05-01",
+        "2016-11-30",
+    )
     try:
         answer = expenses_summary(df, user_id, start_date, end_date)
     except:
@@ -146,7 +166,12 @@ def test_expenses_summary_2():
 
 
 def test_cash_flow_summary_1():
-    df, user_id, start_date, end_date = sample_data, 126, "2013-01-01", "2013-02-28"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        126,
+        "2013-01-01",
+        "2013-02-28",
+    )
     try:
         answer = cash_flow_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):
@@ -213,7 +238,12 @@ def test_cash_flow_summary_1():
 
 
 def test_cash_flow_summary_2():
-    df, user_id, start_date, end_date = sample_data, 50, "2011-01-01", "2011-04-30"
+    df, user_id, start_date, end_date = (
+        sample_data.copy(deep=True),
+        50,
+        "2011-01-01",
+        "2011-04-30",
+    )
     try:
         answer = cash_flow_summary(df, user_id, start_date, end_date)
         if not isinstance(answer, pd.DataFrame):

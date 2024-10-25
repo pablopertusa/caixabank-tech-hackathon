@@ -37,7 +37,11 @@ def test_agent_1():
         "create_report": True,
     }
     try:
-        submitted_output = run_agent(input=input, client_id=client_id, df=sample_data)
+        submitted_output = run_agent(
+            input=input,
+            client_id=client_id,
+            df=sample_data.copy(deep=True),
+        )
     except Exception as e:
         print(e)
         submitted_output = {}
@@ -63,10 +67,14 @@ def test_agent_2():
         "start_date": "2018-01-01",
         "end_date": "2018-05-31",
         "client_id": client_id,
-        "create_report": False,
+        "create_report": True,
     }
     try:
-        submitted_output = run_agent(input=input, client_id=client_id, df=sample_data)
+        submitted_output = run_agent(
+            input=input,
+            client_id=client_id,
+            df=sample_data.copy(deep=True),
+        )
     except Exception as e:
         print(e)
         submitted_output = {}
@@ -95,7 +103,11 @@ def test_agent_3():
         "create_report": False,
     }
     try:
-        submitted_output = run_agent(input=input, client_id=client_id, df=sample_data)
+        submitted_output = run_agent(
+            input=input,
+            client_id=client_id,
+            df=sample_data.copy(deep=True),
+        )
     except Exception as e:
         print(e)
         submitted_output = {}
