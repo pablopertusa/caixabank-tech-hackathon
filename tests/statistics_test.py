@@ -33,6 +33,7 @@ def test_earnings_and_expenses_1():
         pd.testing.assert_frame_equal(answer, expected_answer)
         test_passed = True
     except Exception as e:
+        print(e)
         print("Not the expected output.")
         test_passed = False
     assert test_passed

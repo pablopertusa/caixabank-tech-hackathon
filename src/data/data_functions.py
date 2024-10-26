@@ -1,5 +1,7 @@
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import os
+from datetime import datetime
 
 def earnings_and_expenses(
     df: pd.DataFrame, client_id: int, start_date: str, end_date: str
@@ -31,7 +33,39 @@ def earnings_and_expenses(
 
     """
 
-    return pd.DataFrame({"Earnings": [], "Expenses": []})
+    def estar_entre(start, end, x):
+        if start <= x and end >= x:
+            return True
+        return False
+    
+    earnings = 0
+    expenses = 0
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    select1 = df[df['client_id'] == client_id]
+    select2 = select1[select1['date'].map(lambda x: estar_entre(start_date, end_date, x))]
+    for _, row in select2.iterrows():
+        amount = row['amount']
+        if float(amount[1:]) < 0:
+            expenses += float(amount[1:])
+        else:
+            earnings += float(amount[1:])
+
+    earnings = round(earnings, 2)
+    expenses = round(expenses, 2)
+
+    fig, ax = plt.subplots()
+    categories = ['Earnings', 'Expenses']
+    values = [earnings, expenses]
+    ax.bar(categories, values)
+    ax.set_ylabel('Amount')
+    ax.set_title('Earnings and Expenses')
+
+    output_dir = "reports/figures"
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, "earnings_and_expenses.png"))
+
+    return pd.DataFrame({"Earnings": [earnings], "Expenses": [expenses]})
 
 
 def expenses_summary(
