@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from datetime import datetime
+import json
 
 def earnings_and_expenses(
     df: pd.DataFrame, client_id: int, start_date: str, end_date: str
@@ -63,7 +64,7 @@ def earnings_and_expenses(
 
     output_dir = "reports/figures"
     os.makedirs(output_dir, exist_ok=True)
-    plt.savefig(os.path.join(output_dir, "earnings_and_expenses.png"))
+    plt.savefig(os.path.join(output_dir, "earnings_and_expenses.png"), format='png', dpi=300)
 
     return pd.DataFrame({"Earnings": [earnings], "Expenses": [expenses]})
 
@@ -103,14 +104,89 @@ def expenses_summary(
 
     """
 
+    def estar_entre(start, end, x):
+        x = datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S')
+        if start <= x and end >= x:
+            return True
+        return False
+
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    select1 = df[df['client_id'] == client_id]
+    select2 = select1[select1['date'].map(lambda x: estar_entre(start_date, end_date, x))]
+
+    categorias = select2['mcc'].unique()
+    d = {}
+
+    with open('data/raw/mcc_codes.json', 'r') as file:
+        dict_categorias = json.load(file)
+
+    for cat in categorias:
+        df_cat = select2[select2['mcc'] == cat]
+        df_cat['amount'] = df_cat['amount'].map(lambda x: float(x[1:]))
+        total = round(sum(df_cat['amount'].values),2)
+        avg = round(total/len(df_cat['amount'].values),2)
+        n_transactions = len(df_cat['amount'].values)
+        minimo = round(min(df_cat['amount'].values),2)
+        maximo = round(max(df_cat['amount'].values),2)
+        categoria = dict_categorias[str(cat)]
+        d[categoria] = {
+            'Total Amount': total,
+            'Average': avg,
+            'Max': maximo,
+            'Min': minimo,
+            'Num. Transactions': n_transactions
+        }
+    
+
+    ordenadas = sorted([dict_categorias[str(c)] for c in categorias])
+    expenses_type = []
+    total_amount = []
+    average = []
+    maximo_l = []
+    minimo_l = []
+    num_transactions = []
+
+    for c in ordenadas:
+        if c in d:
+            expenses_type.append(c)
+            total_amount.append(d[c]['Total Amount'])
+            average.append(d[c]['Average'])
+            maximo_l.append(d[c]['Max'])
+            minimo_l.append(d[c]['Min'])
+            num_transactions.append(d[c]['Num. Transactions'])
+
+    df_result = pd.DataFrame(
+        {
+            "Expenses Type": expenses_type,
+            "Total Amount": total_amount,
+            "Average": average,
+            "Max": maximo,
+            "Min": minimo,
+            "Num. Transactions": num_transactions,
+        }
+    )
+
+    fig, ax = plt.subplots()
+    ax.bar(df_result['Expenses Type'], df_result['Total Amount'])
+    ax.set_ylabel('Total Amount')
+    ax.set_title('Expenses by Merchant Category')
+    plt.xticks(rotation=90)
+    
+    output_dir = "reports/figures"
+    os.makedirs(output_dir, exist_ok=True)
+    plt.savefig(os.path.join(output_dir, "expenses_summary.png"))
+    plt.close()
+
+
     return pd.DataFrame(
         {
-            "Expenses Type": [],
-            "Total Amount": [],
-            "Average": [],
-            "Max": [],
-            "Min": [],
-            "Num. Transactions": [],
+            "Expenses Type": expenses_type,
+            "Total Amount": total_amount,
+            "Average": average,
+            "Max": maximo,
+            "Min": minimo,
+            "Num. Transactions": num_transactions,
         }
     )
 
