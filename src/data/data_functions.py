@@ -105,7 +105,7 @@ def expenses_summary(
     """
 
     def estar_entre(start, end, x):
-        x = datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S')
+        #x = datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S')
         if start <= x and end >= x:
             return True
         return False
@@ -114,8 +114,9 @@ def expenses_summary(
     end_date = datetime.strptime(end_date, '%Y-%m-%d')
     select1 = df[df['client_id'] == client_id]
     select2 = select1[select1['date'].map(lambda x: estar_entre(start_date, end_date, x))]
+    print(len(select2))
 
-    categorias = select2['mcc'].unique()
+    categorias = set(select2['mcc'].values)
     d = {}
 
     with open('data/raw/mcc_codes.json', 'r') as file:
@@ -166,8 +167,7 @@ def expenses_summary(
             "Num. Transactions": num_transactions,
         }
     )
-
-    fig, ax = plt.subplots()
+    _, ax = plt.subplots()
     ax.bar(df_result['Expenses Type'], df_result['Total Amount'])
     ax.set_ylabel('Total Amount')
     ax.set_title('Expenses by Merchant Category')
@@ -225,7 +225,70 @@ def cash_flow_summary(
         Pandas Dataframe with the cash flow summary.
 
     """
-    return pd.DataFrame()
+
+    def estar_entre(start, end, x):
+        if start <= x and end >= x:
+            return True
+        return False
+    
+    def quitar_nan(x):
+        if str(x) == 'nan':
+            return 0
+        return x
+
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    select1 = df[df['client_id'] == client_id]
+    select2 = select1[select1['date'].map(lambda x: estar_entre(start_date, end_date, x))]
+
+    days_between = (end_date-start_date).days
+
+    if days_between > 60:
+        select2['amount'] = select2['amount'].map(lambda x: float(x[1:]))
+        expenses = select2[select2['amount'] < 0]
+        earnings = select2[select2['amount'] > 0]
+        expenses.set_index('date', inplace=True)
+        df_semanal_expenses = expenses.resample('M').sum()
+        earnings.set_index('date', inplace=True)
+        df_semanal_earning = earnings.resample('M').sum()
+        resul = pd.DataFrame({
+            'Date': df_semanal_earning.index,
+            'Inflows': df_semanal_earning['amount'],
+            'Outflows': df_semanal_expenses['amount'],
+        }
+        )
+        resul['Inflows'] = resul['Inflows'].map(quitar_nan)
+        resul['Outflows'] = resul['Outflows'].map(lambda x: abs(quitar_nan(x)))
+
+        resul['Net Cash Flow'] = resul['Inflows'] - resul['Outflows']
+        resul['% Savings'] = (resul['Net Cash Flow']*100/resul['Inflows']).map(lambda x: round(x,2))
+        resul['Date'] = resul['Date'].map(lambda x: datetime.strftime(x, '%Y-%m'))
+
+    else:
+        select2['amount'] = select2['amount'].map(lambda x: float(x[1:]))
+        expenses = select2[select2['amount'] < 0]
+        earnings = select2[select2['amount'] > 0]
+        expenses.set_index('date', inplace=True)
+        df_semanal_expenses = expenses.resample('W').sum()
+        earnings.set_index('date', inplace=True)
+        df_semanal_earning = earnings.resample('W').sum()
+        resul = pd.DataFrame({
+            'Date': df_semanal_earning.index,
+            'Inflows': df_semanal_earning['amount'],
+            'Outflows': df_semanal_expenses['amount'],
+        }
+        )
+        resul['Inflows'] = resul['Inflows'].map(quitar_nan)
+        resul['Outflows'] = resul['Outflows'].map(lambda x: abs(quitar_nan(x)))
+
+        resul['Net Cash Flow'] = resul['Inflows'] - resul['Outflows']
+        resul['% Savings'] = (resul['Net Cash Flow']*100/resul['Inflows']).map(lambda x: round(x,2))
+        resul['Date'] = resul['Date'].map(lambda x: datetime.strftime(x, '%Y-%m-%d'))
+
+
+
+    resul.index = pd.RangeIndex(start=0, stop=len(resul), step=1)
+    return resul
 
 
 if __name__ == "__main__":

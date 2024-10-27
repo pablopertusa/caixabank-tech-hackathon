@@ -234,6 +234,7 @@ def test_cash_flow_summary_1():
 
         test_passed = True
     except Exception as e:
+        print(e)
         test_passed = False
 
     assert test_passed
@@ -264,6 +265,7 @@ def test_cash_flow_summary_2():
 
         test_passed = True
     except Exception as e:
+        print(e)
         test_passed = False
 
     assert test_passed
