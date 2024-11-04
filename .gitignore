@@ -54,3 +54,7 @@ venv/
 
 # data files
 *.csv
+
+*.json
+
+*.pkl
