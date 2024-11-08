@@ -60,3 +60,5 @@ venv/
 models/
 
 predictions/
+
+data/
