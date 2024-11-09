@@ -51,6 +51,7 @@ Thumbs.db
 #folders
 .venv/
 venv/
+venv_mdp/
 
 # data files
 *.csv
