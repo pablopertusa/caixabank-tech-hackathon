@@ -58,7 +58,7 @@ venv_mdp/
 
 *.json
 
-models/
+*.pkl
 
 predictions/
 
